@@ -11,9 +11,9 @@ Cliente → Next.js en Vercel → Shopify Storefront API → Shopify Checkout �
 - `app/`: layout, página principal y estilos globales.
 - `components/`: secciones modulares de la landing y controles interactivos.
 - `lib/shopify.ts`: cliente central de Storefront API y tipos compartidos.
-- `public/`: medios locales provisionales; los medios definitivos podrán venir de Shopify CDN.
+- `public/media/`: fotografías optimizadas, logo, pósteres y videos MP4 preparados para web. Los medios definitivos también podrán venir de Shopify CDN.
 
-Los datos comerciales mostrados actualmente son provisionales. Cuando se configure Shopify, nombre, descripción, precio, medios, variantes y disponibilidad se consultarán desde Storefront API.
+La landing ya incorpora la identidad MUFASA, medios del producto y las medidas proporcionadas (mangas 65 cm, largo total 92 cm y circunferencia 86 cm). Cuando se configure Shopify, nombre, descripción, precio, medios, variantes y disponibilidad se consultarán desde Storefront API.
 
 ## Instalación
 

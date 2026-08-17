@@ -1,14 +1,11 @@
 "use client";
 
-import { useState } from "react";
-
 const colors = [
   { name: "Negro", value: "#181a1b" },
   { name: "Gris", value: "#858581" },
 ];
 
-export function ColorSelector() {
-  const [selected, setSelected] = useState("Negro");
+export function ColorSelector({ selected, onSelect }: { selected: string; onSelect: (color: string) => void }) {
   return (
     <fieldset className="color-selector">
       <legend>Color: <strong>{selected}</strong></legend>
@@ -20,13 +17,15 @@ export function ColorSelector() {
             className={selected === color.name ? "color-option is-active" : "color-option"}
             aria-label={`Elegir color ${color.name}`}
             aria-pressed={selected === color.name}
-            onClick={() => setSelected(color.name)}
+            onClick={() => onSelect(color.name)}
           >
             <span style={{ background: color.value }} />
           </button>
         ))}
       </div>
-      <p className="provisional-note">Disponibilidad y talla por confirmar con el proveedor.</p>
+      <p className="provisional-note">
+        {selected === "Gris" ? "Imágenes grises de referencia; el acabado real se confirmará con el proveedor." : "Disponibilidad y talla por confirmar con el proveedor."}
+      </p>
     </fieldset>
   );
 }

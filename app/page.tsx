@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { Benefits } from "@/components/Benefits";
 import { BuyButton } from "@/components/BuyButton";
 import { FAQ } from "@/components/FAQ";
@@ -11,7 +12,7 @@ import { StickyBuyButton } from "@/components/StickyBuyButton";
 export default function Home() {
   return (
     <main>
-      <header className="site-header"><a className="brand" href="#top">NIDO<span>®</span></a><nav aria-label="Navegación principal"><a href="#beneficios">Beneficios</a><a href="#medidas">Medidas</a></nav><a className="header-cta" href="#comprar">Comprar</a></header>
+      <header className="site-header"><a className="brand brand--image" href="#top"><Image src="/media/mufasa-wordmark.webp" alt="Mufasa" width={150} height={50} priority /></a><nav aria-label="Navegación principal"><a href="#beneficios">Beneficios</a><a href="#medidas">Medidas</a></nav><a className="header-cta" href="#comprar">Comprar</a></header>
       <div id="top"><Hero /></div>
       <div className="marquee" aria-hidden="true"><span>Suave por dentro</span><i>✦</i><span>Amplio y cómodo</span><i>✦</i><span>Hecho para el frío</span></div>
       <Benefits />
@@ -21,7 +22,7 @@ export default function Home() {
       <Reviews />
       <FAQ />
       <section className="final-cta"><p className="eyebrow">Tu momento, más cómodo</p><h2>Haz del frío<br /><em>tu lugar favorito.</em></h2><p>Buzo térmico tipo saco-cobija con forro polar ultra suave.</p><BuyButton /></section>
-      <footer><a className="brand" href="#top">NIDO<span>®</span></a><p>Información comercial provisional hasta completar la conexión con Shopify.</p><small>© {new Date().getFullYear()}</small></footer>
+      <footer><a className="brand brand--image brand--footer" href="#top"><Image src="/media/mufasa-wordmark.webp" alt="Mufasa" width={150} height={50} /></a><p>Información comercial sincronizable con Shopify.</p><small>© {new Date().getFullYear()}</small></footer>
       <StickyBuyButton />
     </main>
   );
