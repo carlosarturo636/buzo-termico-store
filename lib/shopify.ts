@@ -1,46 +1,150 @@
-const domain = process.env.SHOPIFY_STORE_DOMAIN;
-const storefrontToken = process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN;
-const apiVersion = process.env.SHOPIFY_STOREFRONT_API_VERSION;
+import "server-only";
+
+const API_VERSION = "2026-07";
 
 export type ShopifyMoney = { amount: string; currencyCode: string };
-export type ShopifyMedia =
-  | { type: "image"; id: string; url: string; altText: string | null; width?: number; height?: number }
-  | { type: "video"; id: string; url: string; previewImage?: string; altText: string | null };
+export type ShopifySelectedOption = { name: string; value: string };
+export type ShopifyProductOption = { name: string; values: string[] };
+export type ShopifyVariant = {
+  id: string;
+  title: string;
+  availableForSale: boolean;
+  price: ShopifyMoney;
+  selectedOptions: ShopifySelectedOption[];
+};
+export type ShopifyProduct = {
+  id: string;
+  handle: string;
+  title: string;
+  description: string;
+  availableForSale: boolean;
+  options: ShopifyProductOption[];
+  variants: ShopifyVariant[];
+};
+export type ShopifyCart = { id: string; checkoutUrl: string };
 
 type ShopifyResponse<T> = { data?: T; errors?: Array<{ message: string }> };
+type CartUserError = { field?: string[] | null; message: string };
 
-export async function shopifyFetch<T>({
-  query,
-  variables,
-  cache = "force-cache",
-}: {
+export class ShopifyError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = "ShopifyError";
+  }
+}
+
+function getConfig() {
+  const domain = process.env.SHOPIFY_STORE_DOMAIN?.trim();
+  const token = process.env.SHOPIFY_STOREFRONT_PRIVATE_TOKEN?.trim();
+  if (!domain || !token) throw new ShopifyError("Shopify no está configurado.");
+  return { domain: domain.replace(/^https?:\/\//, "").replace(/\/$/, ""), token };
+}
+
+async function shopifyFetch<T>({ query, variables, buyerIp }: {
   query: string;
   variables?: Record<string, unknown>;
-  cache?: RequestCache;
+  buyerIp?: string;
 }): Promise<T> {
-  if (!domain || !storefrontToken || !apiVersion) {
-    throw new Error("Faltan variables de entorno de Shopify.");
+  const { domain, token } = getConfig();
+  const requestHeaders: Record<string, string> = {
+    "Content-Type": "application/json",
+    "Shopify-Storefront-Private-Token": token,
+  };
+  if (buyerIp) requestHeaders["Shopify-Storefront-Buyer-IP"] = buyerIp;
+
+  let response: Response;
+  try {
+    response = await fetch(`https://${domain}/api/${API_VERSION}/graphql.json`, {
+      method: "POST",
+      headers: requestHeaders,
+      body: JSON.stringify({ query, variables }),
+      cache: "no-store",
+    });
+  } catch {
+    throw new ShopifyError("No fue posible contactar a Shopify.");
   }
 
-  const response = await fetch(`https://${domain}/api/${apiVersion}/graphql.json`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "X-Shopify-Storefront-Access-Token": storefrontToken,
-    },
-    body: JSON.stringify({ query, variables }),
-    cache,
-  });
-
-  const result = (await response.json()) as ShopifyResponse<T>;
+  let result: ShopifyResponse<T>;
+  try {
+    result = (await response.json()) as ShopifyResponse<T>;
+  } catch {
+    throw new ShopifyError("Shopify devolvió una respuesta inválida.");
+  }
   if (!response.ok || result.errors?.length || !result.data) {
-    throw new Error(result.errors?.map(({ message }) => message).join(", ") || "Shopify no respondió correctamente.");
+    throw new ShopifyError("Shopify no pudo completar la solicitud.");
   }
   return result.data;
 }
 
-export const formatMoney = ({ amount, currencyCode }: ShopifyMoney) =>
-  new Intl.NumberFormat("es-CO", { style: "currency", currency: currencyCode, maximumFractionDigits: 0 }).format(Number(amount));
+const PRODUCT_QUERY = `#graphql
+  query Product($handle: String!) {
+    product(handle: $handle) {
+      id
+      handle
+      title
+      description
+      availableForSale
+      options { name values }
+      variants(first: 50) {
+        nodes {
+          id
+          title
+          availableForSale
+          price { amount currencyCode }
+          selectedOptions { name value }
+        }
+      }
+    }
+  }
+`;
 
-// La siguiente etapa añadirá consultas tipadas para producto, variantes y carrito.
-// El checkout siempre se completará en la checkoutUrl devuelta por Shopify.
+export async function getProduct(buyerIp?: string): Promise<ShopifyProduct> {
+  const handle = process.env.SHOPIFY_PRODUCT_HANDLE?.trim() || "mufasa";
+  const data = await shopifyFetch<{
+    product: (Omit<ShopifyProduct, "variants"> & { variants: { nodes: ShopifyVariant[] } }) | null;
+  }>({ query: PRODUCT_QUERY, variables: { handle }, buyerIp });
+  if (!data.product) throw new ShopifyError("El producto no fue encontrado.");
+  return { ...data.product, variants: data.product.variants.nodes };
+}
+
+const CART_CREATE_MUTATION = `#graphql
+  mutation CartCreate {
+    cartCreate(input: {}) {
+      cart { id checkoutUrl }
+      userErrors { field message }
+    }
+  }
+`;
+
+export async function createCart(buyerIp?: string): Promise<ShopifyCart> {
+  const data = await shopifyFetch<{
+    cartCreate: { cart: ShopifyCart | null; userErrors: CartUserError[] };
+  }>({ query: CART_CREATE_MUTATION, buyerIp });
+  if (data.cartCreate.userErrors.length || !data.cartCreate.cart) {
+    throw new ShopifyError("No fue posible crear el carrito.");
+  }
+  return data.cartCreate.cart;
+}
+
+const CART_LINES_ADD_MUTATION = `#graphql
+  mutation CartLinesAdd($cartId: ID!, $lines: [CartLineInput!]!) {
+    cartLinesAdd(cartId: $cartId, lines: $lines) {
+      cart { id checkoutUrl }
+      userErrors { field message }
+    }
+  }
+`;
+
+export async function addToCart(cartId: string, merchandiseId: string, quantity = 1, buyerIp?: string): Promise<ShopifyCart> {
+  const data = await shopifyFetch<{
+    cartLinesAdd: { cart: ShopifyCart | null; userErrors: CartUserError[] };
+  }>({
+    query: CART_LINES_ADD_MUTATION,
+    variables: { cartId, lines: [{ merchandiseId, quantity }] },
+    buyerIp,
+  });
+  if (data.cartLinesAdd.userErrors.length || !data.cartLinesAdd.cart) {
+    throw new ShopifyError("No fue posible agregar el producto al carrito.");
+  }
+  return data.cartLinesAdd.cart;
+}
