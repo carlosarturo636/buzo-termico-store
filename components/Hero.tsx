@@ -7,22 +7,22 @@ import { ProductMedia, type MediaItem } from "./ProductMedia";
 import { useProduct } from "./ProductProvider";
 
 const blackMedia: MediaItem[] = [
-  { type: "image", src: "/media/black-model-front.webp", alt: "Modelo usando el buzo térmico negro de frente" },
-  { type: "image", src: "/media/black-model-back.webp", alt: "Modelo usando el buzo térmico negro de espalda" },
-  { type: "image", src: "/media/black-flat-front.webp", alt: "Buzo térmico negro extendido de frente" },
-  { type: "image", src: "/media/black-flat-back.webp", alt: "Buzo térmico negro extendido de espalda" },
-  { type: "image", src: "/media/black-neckline-detail.webp", alt: "Detalle del cuello del buzo térmico negro" },
-  { type: "image", src: "/media/black-pocket-cuff-detail.webp", alt: "Detalle del bolsillo y el puño del buzo térmico negro" },
-  { type: "image", src: "/media/black-hood-detail.webp", alt: "Detalle de la capucha del buzo térmico negro" },
+  { type: "image", src: "/media/black-model-front-hq.webp", alt: "Modelo usando el buzo térmico negro de frente" },
+  { type: "image", src: "/media/black-model-back-hq.webp", alt: "Modelo usando el buzo térmico negro de espalda" },
+  { type: "image", src: "/media/black-flat-front-hq.webp", alt: "Buzo térmico negro extendido de frente" },
+  { type: "image", src: "/media/black-flat-back-hq.webp", alt: "Buzo térmico negro extendido de espalda" },
+  { type: "image", src: "/media/black-neckline-detail-hq.webp", alt: "Detalle del cuello del buzo térmico negro" },
+  { type: "image", src: "/media/black-pocket-cuff-detail-hq.webp", alt: "Detalle del bolsillo y el puño del buzo térmico negro" },
+  { type: "image", src: "/media/black-hood-detail-hq.webp", alt: "Detalle de la capucha del buzo térmico negro" },
 ];
 
 const grayMedia: MediaItem[] = [
-  { type: "image", src: "/media/gray-model-front.webp", alt: "Presentación gris del buzo térmico en uso" },
-  { type: "image", src: "/media/gray-flat-angle.webp", alt: "Presentación gris del buzo térmico extendido" },
-  { type: "image", src: "/media/gray-hood-detail.webp", alt: "Detalle de la capucha en la presentación gris" },
-  { type: "image", src: "/media/gray-flat-front.webp", alt: "Buzo térmico gris extendido de frente" },
-  { type: "image", src: "/media/gray-pocket-detail.webp", alt: "Detalle del bolsillo y el puño del buzo térmico gris" },
-  { type: "image", src: "/media/gray-cuff-detail.webp", alt: "Detalle del puño del buzo térmico gris" },
+  { type: "image", src: "/media/gray-model-front-hq.webp", alt: "Presentación gris del buzo térmico en uso" },
+  { type: "image", src: "/media/gray-flat-angle-hq.webp", alt: "Presentación gris del buzo térmico extendido" },
+  { type: "image", src: "/media/gray-hood-detail-hq.webp", alt: "Detalle de la capucha en la presentación gris" },
+  { type: "image", src: "/media/gray-flat-front-hq.webp", alt: "Buzo térmico gris extendido de frente" },
+  { type: "image", src: "/media/gray-pocket-detail-hq.webp", alt: "Detalle del bolsillo y el puño del buzo térmico gris" },
+  { type: "image", src: "/media/gray-cuff-detail-hq.webp", alt: "Detalle del puño del buzo térmico gris" },
 ];
 
 function variantText(variant: ShopifyVariant) {
