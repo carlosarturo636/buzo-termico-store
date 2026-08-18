@@ -16,6 +16,9 @@ const grayMedia: MediaItem[] = [
   { type: "image", src: "/media/gray-model-front.webp", alt: "Presentación gris del buzo térmico en uso" },
   { type: "image", src: "/media/gray-flat-angle.webp", alt: "Presentación gris del buzo térmico extendido" },
   { type: "image", src: "/media/gray-hood-detail.webp", alt: "Detalle de la capucha en la presentación gris" },
+  { type: "image", src: "/media/gray-flat-front.webp", alt: "Buzo térmico gris extendido de frente" },
+  { type: "image", src: "/media/gray-pocket-detail.webp", alt: "Detalle del bolsillo y el puño del buzo térmico gris" },
+  { type: "image", src: "/media/gray-cuff-detail.webp", alt: "Detalle del puño del buzo térmico gris" },
 ];
 
 function variantText(variant: ShopifyVariant) {
