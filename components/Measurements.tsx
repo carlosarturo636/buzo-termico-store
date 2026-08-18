@@ -5,5 +5,5 @@ export function Measurements() {
     ["Contorno completo del torso", "86 cm"],
   ];
 
-  return <section className="section measurements" id="medidas"><div><p className="eyebrow">Guía del producto</p><h2>Medidas</h2><p><strong>Talla única.</strong> Medidas proporcionadas por el proveedor.</p></div><div className="measure-grid">{measurements.map(([label, value]) => <div className="measure-card" key={label}><span>{label}</span><strong>{value}</strong></div>)}</div></section>;
+  return <section className="section measurements" id="medidas"><div><p className="eyebrow">Guía del producto</p><h2>Medidas</h2><p><strong>Talla única.</strong></p></div><div className="measure-grid">{measurements.map(([label, value]) => <div className="measure-card" key={label}><span>{label}</span><strong>{value}</strong></div>)}</div></section>;
 }
