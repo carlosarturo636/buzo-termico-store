@@ -33,6 +33,8 @@ p { line-height: 1.65; }
 .brand span { color: var(--rust); font: 500 .55rem var(--font-sans); vertical-align: top; }
 .brand--image { width: 150px; height: 50px; display: block; overflow: hidden; }
 .brand--image img { width: 100%; height: 100%; object-fit: contain; mix-blend-mode: multiply; }
+.brand--header { width: 154px; height: 56px; }
+.brand--header img { mix-blend-mode: normal; }
 .brand--footer { filter: invert(1); opacity: .85; }
 .site-header nav { display: flex; gap: 2.5rem; font-size: .8rem; }
 .header-cta { padding: .7rem 1rem; border-bottom: 1px solid; font-size: .75rem; font-weight: 800; letter-spacing: .09em; text-transform: uppercase; }
@@ -139,6 +141,7 @@ footer { padding: 2rem clamp(1.25rem, 5vw, 5rem) 6rem; display: flex; justify-co
 
 @media (max-width: 800px) {
   .site-header { height: 64px; }
+  .brand--header { width: 124px; height: 44px; }
   .site-header nav { display: none; }
   .hero { min-height: auto; padding: 3.25rem 1.25rem 4.5rem; }
   .variant-grid { grid-template-columns: 1fr; gap: 2rem; }

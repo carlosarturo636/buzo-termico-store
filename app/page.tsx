@@ -25,7 +25,7 @@ export default async function Home() {
 
   return (
     <ProductProvider product={product} commerceError={commerceError}><main>
-      <header className="site-header"><a className="brand brand--image" href="#top"><Image src="/media/mufasa-wordmark.webp" alt="Mufasa" width={150} height={50} priority /></a><nav aria-label="Navegación principal"><a href="#beneficios">Beneficios</a><a href="#medidas">Medidas</a></nav><a className="header-cta" href="#comprar">Comprar</a></header>
+      <header className="site-header"><a className="brand brand--image brand--header" href="#top"><Image src="/media/mufasa-header-logo.webp" alt="Mufasa" width={600} height={214} sizes="(max-width: 800px) 124px, 154px" priority /></a><nav aria-label="Navegación principal"><a href="#beneficios">Beneficios</a><a href="#medidas">Medidas</a></nav><a className="header-cta" href="#comprar">Comprar</a></header>
       <div id="top"><Hero /></div>
       <div className="marquee" aria-hidden="true"><span>Suave por dentro</span><i>✦</i><span>Amplio y cómodo</span><i>✦</i><span>Hecho para el frío</span></div>
       <Benefits />
