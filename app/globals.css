@@ -41,7 +41,7 @@ p { line-height: 1.65; }
 
 .campaign-hero { position: relative; isolation: isolate; height: clamp(560px, 86svh, 900px); overflow: hidden; color: #fffaf1; background: #1b1b19; }
 .campaign-hero::after { content: ""; position: absolute; z-index: -1; inset: 0; background: linear-gradient(90deg, rgba(12,12,11,.46) 0%, rgba(12,12,11,.08) 52%, transparent 78%), linear-gradient(0deg, rgba(12,12,11,.44) 0%, transparent 48%); }
-.campaign-hero__image { z-index: -2; object-fit: cover; object-position: center 8%; }
+.campaign-hero__video { position: absolute; z-index: -2; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 8%; pointer-events: none; }
 .campaign-hero__content { position: absolute; left: clamp(1.5rem, 5vw, 5rem); bottom: clamp(2.5rem, 7vh, 5rem); max-width: min(44rem, 78vw); animation: campaign-reveal .7s ease-out both; }
 .campaign-hero__brand { margin: 0 0 1.25rem; font-size: .72rem; font-weight: 800; letter-spacing: .22em; }
 .campaign-hero h1 { font-size: clamp(4.25rem, 8.5vw, 8.5rem); line-height: .82; text-transform: uppercase; text-wrap: balance; }
@@ -174,7 +174,7 @@ p { line-height: 1.65; }
   .site-header nav { display: none; }
   .campaign-hero { height: clamp(520px, 76svh, 760px); }
   .campaign-hero::after { background: linear-gradient(0deg, rgba(12,12,11,.64) 0%, rgba(12,12,11,.08) 62%, transparent 78%); }
-  .campaign-hero__image { object-position: center center; }
+  .campaign-hero__video { object-position: center center; }
   .campaign-hero__content { left: 1.25rem; right: 1.25rem; bottom: clamp(2rem, 5svh, 3rem); max-width: none; }
   .campaign-hero__brand { margin-bottom: .9rem; }
   .campaign-hero h1 { font-size: clamp(3.5rem, 16vw, 5.25rem); line-height: .84; }
