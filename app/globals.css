@@ -37,8 +37,21 @@ p { line-height: 1.65; }
 .site-header nav { display: flex; gap: 2.5rem; font-size: .8rem; }
 .header-cta { padding: .7rem 1rem; border-bottom: 1px solid; font-size: .75rem; font-weight: 800; letter-spacing: .09em; text-transform: uppercase; }
 
-.hero { min-height: calc(100vh - 76px); display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(370px, .95fr); }
-.hero-media { min-height: 720px; position: relative; background: #c8ac8e; overflow: hidden; }
+.hero { min-height: calc(100vh - 76px); padding: clamp(3.5rem, 7vw, 7rem) clamp(1.25rem, 4vw, 4.5rem); }
+.hero-heading { max-width: 850px; margin-bottom: clamp(3rem, 6vw, 5rem); }
+.variant-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(1rem, 2.5vw, 2.5rem); }
+.variant-card { min-width: 0; overflow: hidden; background: #eee7dc; }
+.variant-media { position: relative; aspect-ratio: 4 / 5; overflow: hidden; background: #c8ac8e; }
+.variant-media .media-item { min-height: 0; }
+.variant-copy { padding: clamp(1.5rem, 3vw, 2.5rem); }
+.variant-copy h2 { font-size: clamp(2.25rem, 4vw, 4.25rem); }
+.variant-label { margin: 0 0 .65rem; font-size: .68rem; font-weight: 800; letter-spacing: .15em; text-transform: uppercase; }
+.variant-commerce { margin: 1.75rem 0; display: flex; justify-content: space-between; align-items: end; gap: 1rem; }
+.variant-commerce .price { margin: 0; }
+.availability { margin: 0 0 .25rem; font-size: .72rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+.availability::before { content: ""; width: .45rem; height: .45rem; margin-right: .45rem; display: inline-block; border-radius: 50%; background: currentColor; }
+.availability.is-available { color: #526a4d; }
+.availability.is-unavailable { color: #8b5041; }
 .product-media, .media-item { width: 100%; height: 100%; margin: 0; }
 .product-media { position: relative; }
 .media-item { position: relative; min-height: 720px; }
@@ -50,7 +63,6 @@ p { line-height: 1.65; }
 .media-thumb img { object-fit: cover; }
 .media-thumb.is-active { border-color: white; }
 .play-mark { position: absolute; inset: 0; display: grid; place-items: center; color: white; background: rgba(0,0,0,.2); font-size: .85rem; }
-.hero-copy { padding: clamp(3rem, 6vw, 7rem); display: flex; flex-direction: column; justify-content: center; }
 .hero-description { max-width: 37rem; margin: 2rem 0 1.5rem; color: #5e5d57; font-size: 1.05rem; }
 .price { margin: 0 0 2rem; font-family: var(--font-display); font-size: 2rem; }
 .price span { font: 700 .65rem var(--font-sans); letter-spacing: .13em; }
@@ -67,7 +79,7 @@ p { line-height: 1.65; }
 .buy-button:hover { background: var(--rust-dark); transform: translateY(-1px); }
 .buy-button:disabled { background: #9b968e; cursor: not-allowed; transform: none; }
 .buy-button--compact { min-height: 48px; min-width: 170px; }
-.hero-trust { display: flex; gap: 1.5rem; margin-top: 1.2rem; color: #77756e; font-size: .68rem; }
+.hero-trust { display: flex; justify-content: center; gap: 1.5rem; margin-top: 1.5rem; color: #77756e; font-size: .68rem; }
 
 .marquee { padding: 1.4rem 3vw; display: flex; justify-content: space-around; align-items: center; color: white; background: var(--ink); overflow: hidden; font-family: var(--font-display); font-size: clamp(1rem, 2vw, 1.5rem); font-style: italic; white-space: nowrap; }
 .marquee i { color: #cb8362; }
@@ -128,10 +140,12 @@ footer { padding: 2rem clamp(1.25rem, 5vw, 5rem) 6rem; display: flex; justify-co
 @media (max-width: 800px) {
   .site-header { height: 64px; }
   .site-header nav { display: none; }
-  .hero { min-height: auto; grid-template-columns: 1fr; }
-  .hero-media, .media-item { min-height: 60vh; }
+  .hero { min-height: auto; padding: 3.25rem 1.25rem 4.5rem; }
+  .variant-grid { grid-template-columns: 1fr; gap: 2rem; }
+  .variant-media { aspect-ratio: 4 / 5; }
+  .media-item { min-height: 60vh; }
+  .variant-media .media-item { min-height: 0; }
   .media-thumb { flex-basis: 56px; width: 56px; height: 66px; }
-  .hero-copy { padding: 3.25rem 1.25rem 4.5rem; }
   h1 { font-size: clamp(3.2rem, 15vw, 5rem); }
   .hero-description { font-size: .95rem; }
   .hero-trust { flex-direction: column; gap: .2rem; }
