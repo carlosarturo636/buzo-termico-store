@@ -1,31 +1,43 @@
 "use client";
 
-const colors = [
-  { name: "Negro", value: "#181a1b" },
-  { name: "Gris", value: "#858581" },
-];
+import type { ShopifyVariant } from "@/lib/shopify";
 
-export function ColorSelector({ selected, onSelect }: { selected: string; onSelect: (color: string) => void }) {
+const swatches: Record<string, string> = {
+  negro: "#181a1b", gris: "#858581", black: "#181a1b", gray: "#858581", grey: "#858581",
+};
+
+function variantLabel(variant: ShopifyVariant) {
+  return variant.selectedOptions.find(({ name }) => /color|colour/i.test(name))?.value || variant.title;
+}
+
+export function ColorSelector({ variants, selectedId, onSelect }: {
+  variants: ShopifyVariant[];
+  selectedId: string | null;
+  onSelect: (variantId: string) => void;
+}) {
+  const selected = variants.find(({ id }) => id === selectedId);
   return (
     <fieldset className="color-selector">
-      <legend>Color: <strong>{selected}</strong></legend>
+      <legend>Color: <strong>{selected ? variantLabel(selected) : "No disponible"}</strong></legend>
       <div className="color-options">
-        {colors.map((color) => (
-          <button
-            key={color.name}
-            type="button"
-            className={selected === color.name ? "color-option is-active" : "color-option"}
-            aria-label={`Elegir color ${color.name}`}
-            aria-pressed={selected === color.name}
-            onClick={() => onSelect(color.name)}
-          >
-            <span style={{ background: color.value }} />
-          </button>
-        ))}
+        {variants.map((variant) => {
+          const label = variantLabel(variant);
+          return (
+            <button
+              key={variant.id}
+              type="button"
+              className={selectedId === variant.id ? "color-option is-active" : "color-option"}
+              aria-label={`${variant.availableForSale ? "Elegir" : "Agotado:"} color ${label}`}
+              aria-pressed={selectedId === variant.id}
+              disabled={!variant.availableForSale}
+              onClick={() => onSelect(variant.id)}
+            >
+              <span style={{ background: swatches[label.toLowerCase()] || "#b8a58f" }} />
+            </button>
+          );
+        })}
       </div>
-      <p className="provisional-note">
-        {selected === "Gris" ? "Imágenes grises de referencia; el acabado real se confirmará con el proveedor." : "Disponibilidad y talla por confirmar con el proveedor."}
-      </p>
+      {selected && !selected.availableForSale ? <p className="provisional-note">Esta variante está agotada.</p> : null}
     </fieldset>
   );
 }

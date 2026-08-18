@@ -10,10 +10,10 @@ Cliente → Next.js en Vercel → Shopify Storefront API → Shopify Checkout �
 
 - `app/`: layout, página principal y estilos globales.
 - `components/`: secciones modulares de la landing y controles interactivos.
-- `lib/shopify.ts`: cliente central de Storefront API y tipos compartidos.
+- `lib/shopify.ts`: cliente privado y server-only de Storefront API 2026-07, consultas de producto y Cart API.
 - `public/media/`: fotografías optimizadas, logo, pósteres y videos MP4 preparados para web. Los medios definitivos también podrán venir de Shopify CDN.
 
-La landing ya incorpora la identidad MUFASA, medios del producto y las medidas proporcionadas (mangas 65 cm, largo total 92 cm y contorno completo del torso 86 cm). Cuando se configure Shopify, nombre, descripción, precio, medios, variantes y disponibilidad se consultarán desde Storefront API.
+La landing conserva la identidad MUFASA, los medios locales y las medidas proporcionadas (mangas 65 cm, largo total 92 cm y contorno completo del torso 86 cm). Shopify aporta en tiempo real el nombre, descripción, precio, variantes y disponibilidad; las imágenes y videos no se reemplazan con medios de Shopify.
 
 ## Instalación
 
@@ -32,9 +32,8 @@ Abre `http://localhost:3000`.
 | Variable | Descripción |
 | --- | --- |
 | `SHOPIFY_STORE_DOMAIN` | Dominio `myshopify.com` de la tienda. |
-| `SHOPIFY_STOREFRONT_ACCESS_TOKEN` | Token público de Storefront API. Nunca debe subirse al repositorio. |
-| `SHOPIFY_STOREFRONT_API_VERSION` | Versión soportada de la API, definida al conectar Shopify. |
-| `SHOPIFY_PRODUCT_HANDLE` | Handle real del producto monoproducto. |
+| `SHOPIFY_STOREFRONT_PRIVATE_TOKEN` | Token privado del canal Headless. Solo se usa en el servidor y nunca debe subirse al repositorio. |
+| `SHOPIFY_PRODUCT_HANDLE` | Handle del producto (`mufasa`). |
 
 No agregues `.env.local` ni credenciales reales a Git.
 
@@ -46,12 +45,11 @@ pnpm build
 pnpm start
 ```
 
-## Próxima integración Shopify
+## Flujo de compra
 
-1. Crear/confirmar el producto y sus variantes reales en Shopify.
-2. Crear un token de Storefront API y completar `.env.local`.
-3. Añadir consultas de producto y mutaciones de carrito en `lib/shopify.ts`.
-4. Sustituir los placeholders por datos y medios reales.
-5. Conectar `Comprar ahora` a la variante seleccionada y redirigir a `checkoutUrl` de Shopify.
+1. El Server Component consulta el producto por handle con Storefront API.
+2. El visitante elige una variante real y disponible.
+3. Una Server Action valida de nuevo la variante, crea el carrito con `cartCreate` y añade la línea con `cartLinesAdd`.
+4. El navegador se redirige al `checkoutUrl` devuelto por Shopify.
 
-No se implementará checkout propio, lógica de pedidos ni integración directa con Dropi.
+No hay token en el navegador, checkout propio, lógica de pedidos ni integración directa con Dropi.

@@ -8,10 +8,23 @@ import { HowItWorks } from "@/components/HowItWorks";
 import { Measurements } from "@/components/Measurements";
 import { Reviews } from "@/components/Reviews";
 import { StickyBuyButton } from "@/components/StickyBuyButton";
+import { ProductProvider } from "@/components/ProductProvider";
+import { getProduct } from "@/lib/shopify";
+import { headers } from "next/headers";
 
-export default function Home() {
+export default async function Home() {
+  let product = null;
+  let commerceError: string | undefined;
+  try {
+    const headerList = await headers();
+    const buyerIp = headerList.get("x-forwarded-for")?.split(",")[0]?.trim() || headerList.get("x-real-ip") || undefined;
+    product = await getProduct(buyerIp);
+  } catch {
+    commerceError = "La información de compra no está disponible temporalmente.";
+  }
+
   return (
-    <main>
+    <ProductProvider product={product} commerceError={commerceError}><main>
       <header className="site-header"><a className="brand brand--image" href="#top"><Image src="/media/mufasa-wordmark.webp" alt="Mufasa" width={150} height={50} priority /></a><nav aria-label="Navegación principal"><a href="#beneficios">Beneficios</a><a href="#medidas">Medidas</a></nav><a className="header-cta" href="#comprar">Comprar</a></header>
       <div id="top"><Hero /></div>
       <div className="marquee" aria-hidden="true"><span>Suave por dentro</span><i>✦</i><span>Amplio y cómodo</span><i>✦</i><span>Hecho para el frío</span></div>
@@ -24,6 +37,6 @@ export default function Home() {
       <section className="final-cta"><p className="eyebrow">Tu momento, más cómodo</p><h2>Haz del frío<br /><em>tu lugar favorito.</em></h2><p>Buzo térmico tipo saco-cobija con forro polar ultra suave.</p><BuyButton /></section>
       <footer><a className="brand brand--image brand--footer" href="#top"><Image src="/media/mufasa-wordmark.webp" alt="Mufasa" width={150} height={50} /></a><p>Información comercial sincronizable con Shopify.</p><small>© {new Date().getFullYear()}</small></footer>
       <StickyBuyButton />
-    </main>
+    </main></ProductProvider>
   );
 }

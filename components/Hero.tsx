@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { formatMoney } from "@/lib/money";
 import { BuyButton } from "./BuyButton";
 import { ColorSelector } from "./ColorSelector";
 import { ProductMedia, type MediaItem } from "./ProductMedia";
+import { useProduct } from "./ProductProvider";
 
 const blackMedia: MediaItem[] = [
   { type: "image", src: "/media/black-model-front.webp", alt: "Modelo usando el buzo térmico negro de frente" },
@@ -20,19 +21,21 @@ const grayMedia: MediaItem[] = [
 ];
 
 export function Hero() {
-  const [selectedColor, setSelectedColor] = useState("Negro");
-  const activeMedia = selectedColor === "Gris" ? grayMedia : blackMedia;
+  const { product, selectedVariant, selectVariant, commerceError } = useProduct();
+  const color = selectedVariant?.selectedOptions.find(({ name }) => /color|colour/i.test(name))?.value || selectedVariant?.title || "Negro";
+  const activeMedia = /gris|gray|grey/i.test(color) ? grayMedia : blackMedia;
 
   return (
     <section className="hero" id="comprar">
-      <div className="hero-media"><ProductMedia key={selectedColor} media={activeMedia} /></div>
+      <div className="hero-media"><ProductMedia key={color} media={activeMedia} /></div>
       <div className="hero-copy">
         <p className="eyebrow">Comodidad para días fríos</p>
-        <h1>Buzo térmico<br /><em>tipo saco-cobija</em></h1>
-        <p className="hero-description">Una capa suave y envolvente con forro polar y capucha extra grande, pensada para acompañar tus momentos de descanso.</p>
-        <p className="price">$120.000 <span>COP</span></p>
-        <ColorSelector selected={selectedColor} onSelect={setSelectedColor} />
+        <h1>{product?.title || "Buzo térmico"}<br /><em>tipo saco-cobija</em></h1>
+        <p className="hero-description">{product?.description || "Una capa suave y envolvente con forro polar y capucha extra grande, pensada para acompañar tus momentos de descanso."}</p>
+        <p className="price">{selectedVariant ? formatMoney(selectedVariant.price) : "Precio no disponible"}</p>
+        <ColorSelector variants={product?.variants || []} selectedId={selectedVariant?.id || null} onSelect={selectVariant} />
         <BuyButton />
+        {commerceError ? <p className="buy-note" role="status">{commerceError}</p> : null}
         <div className="hero-trust"><span>Pago gestionado por Shopify</span><span>Compra en checkout seguro</span></div>
       </div>
     </section>

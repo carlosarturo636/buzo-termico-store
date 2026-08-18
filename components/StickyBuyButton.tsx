@@ -1,5 +1,10 @@
+"use client";
+
+import { formatMoney } from "@/lib/money";
 import { BuyButton } from "./BuyButton";
+import { useProduct } from "./ProductProvider";
 
 export function StickyBuyButton() {
-  return <aside className="sticky-buy" aria-label="Compra rápida"><div><small>Buzo térmico</small><strong>$120.000 COP</strong></div><BuyButton compact /></aside>;
+  const { product, selectedVariant } = useProduct();
+  return <aside className="sticky-buy" aria-label="Compra rápida"><div><small>{product?.title || "Buzo térmico"}</small><strong>{selectedVariant ? formatMoney(selectedVariant.price) : "No disponible"}</strong></div><BuyButton compact /></aside>;
 }
