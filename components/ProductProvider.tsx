@@ -12,12 +12,20 @@ type ProductContextValue = {
 
 const ProductContext = createContext<ProductContextValue | null>(null);
 
+function isBlackVariant(variant: ShopifyVariant) {
+  const searchableText = [variant.title, ...variant.selectedOptions.map(({ value }) => value)].join(" ");
+  return /negro|black|noche/i.test(searchableText);
+}
+
 export function ProductProvider({ product, commerceError, children }: {
   product: ShopifyProduct | null;
   commerceError?: string;
   children: React.ReactNode;
 }) {
-  const initialId = product?.variants.find((variant) => variant.availableForSale)?.id ?? product?.variants[0]?.id ?? null;
+  const initialId = product?.variants.find((variant) => variant.availableForSale && isBlackVariant(variant))?.id
+    ?? product?.variants.find((variant) => variant.availableForSale)?.id
+    ?? product?.variants[0]?.id
+    ?? null;
   const [selectedVariantId, setSelectedVariantId] = useState(initialId);
   const selectedVariant = product?.variants.find(({ id }) => id === selectedVariantId) ?? null;
   const value = useMemo(

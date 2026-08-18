@@ -10,17 +10,27 @@ function variantLabel(variant: ShopifyVariant) {
   return variant.selectedOptions.find(({ name }) => /color|colour/i.test(name))?.value || variant.title;
 }
 
+function colorOrder(variant: ShopifyVariant) {
+  const label = variantLabel(variant);
+  if (/negro|black|noche/i.test(label)) return 0;
+  if (/gris|gray|grey|nube/i.test(label)) return 1;
+  return 2;
+}
+
 export function ColorSelector({ variants, selectedId, onSelect }: {
   variants: ShopifyVariant[];
   selectedId: string | null;
   onSelect: (variantId: string) => void;
 }) {
   const selected = variants.find(({ id }) => id === selectedId);
+  const orderedVariants = variants.map((variant, index) => ({ variant, index }))
+    .sort((a, b) => colorOrder(a.variant) - colorOrder(b.variant) || a.index - b.index)
+    .map(({ variant }) => variant);
   return (
     <fieldset className="color-selector">
       <legend>Color: <strong>{selected ? variantLabel(selected) : "No disponible"}</strong></legend>
       <div className="color-options">
-        {variants.map((variant) => {
+        {orderedVariants.map((variant) => {
           const label = variantLabel(variant);
           return (
             <button
