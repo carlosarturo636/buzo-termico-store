@@ -6,6 +6,7 @@ import { Features } from "@/components/Features";
 import { Hero } from "@/components/Hero";
 import { HowItWorks } from "@/components/HowItWorks";
 import { Measurements } from "@/components/Measurements";
+import { MufasaIntro } from "@/components/MufasaIntro";
 import { Reviews } from "@/components/Reviews";
 import { StickyBuyButton } from "@/components/StickyBuyButton";
 import { ProductProvider } from "@/components/ProductProvider";
@@ -24,7 +25,7 @@ export default async function Home() {
   }
 
   return (
-    <ProductProvider product={product} commerceError={commerceError}><main>
+    <ProductProvider product={product} commerceError={commerceError}><MufasaIntro /><main>
       <header className="site-header"><a className="brand brand--image" href="#top"><Image src="/media/mufasa-wordmark.webp" alt="Mufasa" width={150} height={50} priority /></a><nav aria-label="Navegación principal"><a href="#beneficios">Beneficios</a><a href="#medidas">Medidas</a></nav><a className="header-cta" href="#comprar">Comprar</a></header>
       <div id="top"><Hero /></div>
       <div className="marquee" aria-hidden="true"><span>Suave por dentro</span><i>✦</i><span>Amplio y cómodo</span><i>✦</i><span>Hecho para el frío</span></div>
