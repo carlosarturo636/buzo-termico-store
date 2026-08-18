@@ -130,13 +130,18 @@ p { line-height: 1.65; }
 .feature-list li { padding: 1rem 0; display: flex; gap: 1rem; align-items: center; border-bottom: 1px solid var(--line); }
 .feature-list svg { color: var(--rust); }
 
-.measurements { display: grid; grid-template-columns: 1fr 1fr; gap: 10vw; align-items: center; background: #dfd1bf; }
-.measurements > div > p:last-child { max-width: 500px; }
-.measure-grid { display: grid; grid-template-columns: repeat(3, 1fr); }
-.measure-card { min-width: 0; padding: 2rem 1.25rem; border: 1px solid rgba(32,33,30,.25); }
-.measure-card + .measure-card { border-left: 0; }
+.measurements { display: grid; grid-template-columns: minmax(0, .9fr) minmax(320px, 1.1fr); gap: clamp(3rem, 8vw, 8rem); align-items: start; background: #dfd1bf; }
+.measurements__info > p { max-width: 500px; }
+.measure-grid { margin-top: clamp(2.5rem, 5vw, 4.5rem); display: grid; }
+.measure-card { min-width: 0; padding: 1.5rem 0; display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; border-top: 1px solid rgba(32,33,30,.25); }
+.measure-card:last-child { border-bottom: 1px solid rgba(32,33,30,.25); }
 .measure-card span { display: block; color: var(--rust); font-size: .68rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
-.measure-card strong { display: block; margin: 1.5rem 0 0; font: 500 clamp(1.8rem, 3vw, 3rem) var(--font-display); }
+.measure-card strong { display: block; flex: 0 0 auto; font: 500 clamp(1.8rem, 3vw, 3rem) var(--font-display); }
+.measurements__media { min-width: 0; margin: 0; }
+.measurements__video { display: block; width: 100%; max-height: min(72svh, 760px); object-fit: cover; background: #d0c9c6; }
+.measurements__media figcaption { padding-top: 1.5rem; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: clamp(1.5rem, 4vw, 4rem); align-items: baseline; border-top: 1px solid rgba(32,33,30,.25); }
+.measurements__media h3 { font-size: clamp(1.8rem, 3vw, 3rem); }
+.measurements__media p { max-width: 30rem; color: #67665f; }
 
 .reviews .section-heading { margin-bottom: clamp(3rem, 6vw, 5.5rem); }
 .reviews-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid var(--line); border-left: 1px solid var(--line); }
@@ -204,9 +209,10 @@ p { line-height: 1.65; }
   .reviews .section-heading { margin-bottom: 3rem; }
   .reviews-grid { grid-template-columns: 1fr; }
   .review-card { min-height: 0; padding: 2rem; gap: 2.5rem; }
-  .measure-grid { grid-template-columns: 1fr; }
-  .measure-card { padding: 2rem; }
-  .measure-card + .measure-card { border-left: 1px solid rgba(32,33,30,.25); border-top: 0; }
+  .measure-grid { margin-top: 2.5rem; }
+  .measure-card { padding: 1.5rem 0; }
+  .measurements__video { max-height: none; }
+  .measurements__media figcaption { grid-template-columns: 1fr; gap: .5rem; }
   .site-footer { padding-bottom: 7rem; grid-template-columns: 1fr; gap: 3rem; }
   .site-footer__copyright { grid-column: auto; }
   .sticky-buy { position: fixed; z-index: 20; left: 0; right: 0; bottom: 0; padding: .7rem 1rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; color: white; background: rgba(32,33,30,.96); box-shadow: 0 -8px 30px rgba(0,0,0,.15); backdrop-filter: blur(12px); }

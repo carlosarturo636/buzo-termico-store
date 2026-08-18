@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState, useSyncExternalStore } from "react";
+import { useCallback, useEffect, useState, useSyncExternalStore } from "react";
 
 type IntroState = "visible" | "exiting" | "hidden";
 const SESSION_KEY = "mufasa-intro-seen";
@@ -37,6 +37,19 @@ function MufasaIntroPoster() {
 function MufasaIntroPlayer() {
   const [state, setState] = useState<IntroState>("visible");
 
+  const finishIntro = useCallback(() => {
+    try {
+      sessionStorage.setItem(SESSION_KEY, "true");
+    } catch {}
+    setState("exiting");
+  }, []);
+
+  useEffect(() => {
+    if (state !== "visible") return;
+    const timer = window.setTimeout(finishIntro, 4350);
+    return () => window.clearTimeout(timer);
+  }, [finishIntro, state]);
+
   useEffect(() => {
     if (state !== "visible" && state !== "exiting") return;
     const previousOverflow = document.body.style.overflow;
@@ -45,13 +58,6 @@ function MufasaIntroPlayer() {
       document.body.style.overflow = previousOverflow;
     };
   }, [state]);
-
-  function finishIntro() {
-    try {
-      sessionStorage.setItem(SESSION_KEY, "true");
-    } catch {}
-    setState("exiting");
-  }
 
   if (state === "hidden") return null;
 

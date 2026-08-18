@@ -14,7 +14,6 @@ const blackMedia: MediaItem[] = [
   { type: "image", src: "/media/black-neckline-detail.webp", alt: "Detalle del cuello del buzo térmico negro" },
   { type: "image", src: "/media/black-pocket-cuff-detail.webp", alt: "Detalle del bolsillo y el puño del buzo térmico negro" },
   { type: "image", src: "/media/black-hood-detail.webp", alt: "Detalle de la capucha del buzo térmico negro" },
-  { type: "video", src: "/media/hoodie-360.mp4", poster: "/media/hoodie-360-poster.jpg", title: "Vista 360 del buzo térmico negro" },
 ];
 
 const grayMedia: MediaItem[] = [
