@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { Benefits } from "@/components/Benefits";
 import { BuyButton } from "@/components/BuyButton";
 import { FAQ } from "@/components/FAQ";
 import { Features } from "@/components/Features";
@@ -27,8 +26,7 @@ export default async function Home() {
     <ProductProvider product={product} commerceError={commerceError}><main>
       <header className="site-header"><a className="brand brand--image brand--header" href="#top"><Image src="/media/mufasa-header-logo.webp" alt="Mufasa" width={624} height={234} sizes="(max-width: 800px) 124px, 154px" priority /></a><nav aria-label="Navegación principal"><a href="#beneficios">Beneficios</a><a href="#medidas">Medidas</a></nav></header>
       <div id="top"><Hero /></div>
-      <div className="marquee" aria-hidden="true"><span>Suave por dentro</span><i>✦</i><span>Amplio y cómodo</span><i>✦</i><span>Hecho para el frío</span></div>
-      <Benefits />
+      <div className="marquee" id="beneficios" aria-hidden="true"><span>Suave por dentro</span><i>✦</i><span>Amplio y cómodo</span><i>✦</i><span>Hecho para el frío</span></div>
       <HowItWorks />
       <Features />
       <Measurements />
