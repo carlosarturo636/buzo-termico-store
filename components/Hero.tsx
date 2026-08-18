@@ -48,7 +48,10 @@ function VariantCard({ variant, media, purchaseLabel }: {
           <h2>{variantName(variant)}</h2>
         </div>
         <div className="variant-commerce">
-          <p className="price">{variant ? formatMoney(variant.price) : "Precio no disponible"}</p>
+          <div className="variant-price">
+            <p className="price">{variant ? formatMoney(variant.price) : "Precio no disponible"}</p>
+            <p className="payment-note">Pago anticipado o contra entrega</p>
+          </div>
           <p className={`availability ${variant?.availableForSale ? "is-available" : "is-unavailable"}`}>
             {variant?.availableForSale ? "Disponible" : "Agotado"}
           </p>
