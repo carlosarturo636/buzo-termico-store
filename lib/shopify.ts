@@ -22,6 +22,13 @@ export type ShopifyProduct = {
   variants: ShopifyVariant[];
 };
 export type ShopifyCart = { id: string; checkoutUrl: string };
+export type ShopifyPolicy = { title: string; url: string };
+export type ShopifyPolicies = {
+  refundPolicy: ShopifyPolicy | null;
+  shippingPolicy: ShopifyPolicy | null;
+  privacyPolicy: ShopifyPolicy | null;
+  termsOfService: ShopifyPolicy | null;
+};
 
 type ShopifyResponse<T> = { data?: T; errors?: Array<{ message: string }> };
 type CartUserError = { field?: string[] | null; message: string };
@@ -105,6 +112,22 @@ export async function getProduct(buyerIp?: string): Promise<ShopifyProduct> {
   }>({ query: PRODUCT_QUERY, variables: { handle }, buyerIp });
   if (!data.product) throw new ShopifyError("El producto no fue encontrado.");
   return { ...data.product, variants: data.product.variants.nodes };
+}
+
+const SHOP_POLICIES_QUERY = `#graphql
+  query ShopPolicies {
+    shop {
+      refundPolicy { title url }
+      shippingPolicy { title url }
+      privacyPolicy { title url }
+      termsOfService { title url }
+    }
+  }
+`;
+
+export async function getShopPolicies(buyerIp?: string): Promise<ShopifyPolicies> {
+  const data = await shopifyFetch<{ shop: ShopifyPolicies }>({ query: SHOP_POLICIES_QUERY, buyerIp });
+  return data.shop;
 }
 
 const CART_CREATE_MUTATION = `#graphql
