@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useState, useSyncExternalStore } from "react";
 
 type IntroState = "visible" | "exiting" | "hidden";
@@ -8,13 +9,29 @@ const subscribeToHydration = () => () => {};
 
 export function MufasaIntro() {
   const isHydrated = useSyncExternalStore(subscribeToHydration, () => true, () => false);
-  if (!isHydrated) return null;
+  if (!isHydrated) return <MufasaIntroPoster />;
 
   try {
     if (sessionStorage.getItem(SESSION_KEY) === "true") return null;
   } catch {}
 
   return <MufasaIntroPlayer />;
+}
+
+function MufasaIntroPoster() {
+  return (
+    <div className="mufasa-intro" aria-label="Intro de MUFASA">
+      <Image
+        className="mufasa-intro__poster"
+        src="/media/hoodie-360-intro-poster.webp"
+        width={440}
+        height={690}
+        alt=""
+        unoptimized
+      />
+      <span className="mufasa-intro__skip" aria-hidden="true">Omitir intro</span>
+    </div>
+  );
 }
 
 function MufasaIntroPlayer() {
@@ -49,8 +66,9 @@ function MufasaIntroPlayer() {
       <video
         className="mufasa-intro__video"
         src="/media/hoodie-360-intro.mp4"
-        width="460"
-        height="720"
+        poster="/media/hoodie-360-intro-poster.webp"
+        width="440"
+        height="690"
         autoPlay
         muted
         playsInline

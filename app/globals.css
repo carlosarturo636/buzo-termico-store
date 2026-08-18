@@ -21,9 +21,10 @@ h2 { font-size: clamp(2.65rem, 5vw, 5.3rem); }
 h1 em, h2 em { color: var(--rust); font-weight: 400; }
 p { line-height: 1.65; }
 
-.mufasa-intro { position: fixed; z-index: 100; inset: 0; display: grid; place-items: center; overflow: hidden; background: #fafaf7; opacity: 1; transition: opacity .35s ease; }
+.mufasa-intro { position: fixed; z-index: 100; inset: 0; display: grid; place-items: center; overflow: hidden; background: #d0c9c6; opacity: 1; transition: opacity .35s ease; }
+.mufasa-intro-seen .mufasa-intro { display: none; }
 .mufasa-intro.is-exiting { opacity: 0; pointer-events: none; }
-.mufasa-intro__video { display: block; width: auto; height: auto; max-width: min(100vw, 460px); max-height: min(100dvh, 720px); object-fit: contain; }
+.mufasa-intro__video, .mufasa-intro__poster { display: block; width: auto; height: auto; max-width: min(100vw, 440px); max-height: min(100dvh, 690px); object-fit: contain; }
 .mufasa-intro__skip { position: absolute; right: clamp(1rem, 3vw, 2rem); bottom: clamp(1rem, 3vw, 2rem); padding: .65rem 0; color: #4b4b47; background: transparent; border: 0; border-bottom: 1px solid #aaa9a2; cursor: pointer; font-size: .68rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
 .mufasa-intro__skip:hover, .mufasa-intro__skip:focus-visible { color: #111; border-color: #111; }
 

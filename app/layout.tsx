@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
 import { Manrope, Playfair_Display } from "next/font/google";
+import Script from "next/script";
+import { Suspense } from "react";
+import { MufasaIntro } from "@/components/MufasaIntro";
 import "./globals.css";
 
 const manrope = Manrope({ subsets: ["latin"], variable: "--font-sans" });
@@ -13,7 +16,16 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="es">
-      <body className={`${manrope.variable} ${playfair.variable}`}>{children}</body>
+      <head>
+        <link rel="preload" href="/media/hoodie-360-intro-poster.webp" as="image" type="image/webp" />
+      </head>
+      <body className={`${manrope.variable} ${playfair.variable}`}>
+        <Script id="mufasa-intro-session" strategy="beforeInteractive">
+          {`try{if(sessionStorage.getItem("mufasa-intro-seen")==="true")document.documentElement.classList.add("mufasa-intro-seen")}catch{}`}
+        </Script>
+        <MufasaIntro />
+        <Suspense fallback={null}>{children}</Suspense>
+      </body>
     </html>
   );
 }
