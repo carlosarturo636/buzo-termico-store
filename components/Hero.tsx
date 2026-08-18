@@ -45,6 +45,7 @@ function VariantCard({ variant, media, purchaseLabel }: {
         <div>
           <p className="variant-label">Color</p>
           <h2>{variantName(variant)}</h2>
+          <p className="variant-size">Talla única</p>
         </div>
         <div className="variant-commerce">
           <div className="variant-price">

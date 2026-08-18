@@ -59,6 +59,7 @@ p { line-height: 1.65; }
 .variant-copy { padding: clamp(1.5rem, 3vw, 2.5rem); }
 .variant-copy h2 { font-size: clamp(2.25rem, 4vw, 4.25rem); }
 .variant-label { margin: 0 0 .65rem; font-size: .68rem; font-weight: 800; letter-spacing: .15em; text-transform: uppercase; }
+.variant-size { margin-top: .4rem; color: #67665f; font-size: .78rem; font-weight: 400; }
 .variant-commerce { margin: 1.75rem 0; display: flex; justify-content: space-between; align-items: end; gap: 1rem; }
 .variant-commerce .price { margin: 0; }
 .payment-note { margin: .3rem 0 0; color: #77756e; font-size: .68rem; font-weight: 400; line-height: 1.4; }
