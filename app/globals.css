@@ -141,6 +141,29 @@ p { line-height: 1.65; }
 .final-cta h2 em { color: #d78a66; }
 .final-cta > p:not(.eyebrow) { margin: 2rem auto; color: #c4c0b8; }
 .final-cta .buy-wrap { max-width: 340px; margin: auto; }
+.legal-policies { color: #eee8de; background: #282925; }
+.legal-policies__heading { margin-bottom: clamp(3.5rem, 7vw, 6.5rem); }
+.legal-policies__heading h2 em { color: #d78a66; }
+.legal-policies__content { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(280px, .65fr); gap: 1px; background: rgba(255,255,255,.14); border: 1px solid rgba(255,255,255,.14); }
+.policy-block, .policy-contact { padding: clamp(2rem, 4vw, 4rem); background: #282925; }
+.policy-block--warranty { grid-column: 1 / -1; }
+.policy-block h3 { margin: 0 0 1.5rem; font: 500 clamp(1.4rem, 2.3vw, 2rem)/1.2 var(--font-display), Georgia, serif; text-transform: uppercase; }
+.policy-block > p { max-width: 62rem; color: #c8c4bc; }
+.policy-cases { margin: clamp(2.5rem, 5vw, 4.5rem) 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid rgba(255,255,255,.16); }
+.policy-case { padding: 2rem 2rem 2rem 0; border-right: 1px solid rgba(255,255,255,.16); }
+.policy-case + .policy-case { padding-left: 2rem; }
+.policy-case:last-child { border-right: 0; }
+.policy-case > span { color: #d78a66; font-size: .7rem; font-weight: 800; letter-spacing: .13em; }
+.policy-case h4, .policy-deadline h4 { margin: 1.75rem 0 .75rem; font: 500 1.25rem var(--font-display), Georgia, serif; }
+.policy-case p, .policy-deadline p { margin: 0; color: #bdb9b1; font-size: .9rem; }
+.policy-deadline { max-width: 52rem; padding: 1.75rem 0; border-top: 1px solid rgba(255,255,255,.16); border-bottom: 1px solid rgba(255,255,255,.16); }
+.policy-deadline h4 { margin-top: 0; }
+.policy-note { margin: 2rem 0 0; font-size: .78rem; }
+.policy-block--retract { min-height: 280px; }
+.policy-contact { display: flex; flex-direction: column; justify-content: center; background: var(--rust); }
+.policy-contact > p:not(.eyebrow) { max-width: 30rem; margin: 0 0 2rem; }
+.policy-contact a { width: max-content; max-width: 100%; color: white; font: italic 500 clamp(2rem, 4vw, 3.6rem)/1 var(--font-display), Georgia, serif; border-bottom: 1px solid rgba(255,255,255,.7); }
+.policy-contact > span { margin-top: .8rem; color: #f3d8cb; font-size: .68rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
 footer { padding: 2rem clamp(1.25rem, 5vw, 5rem) 6rem; display: flex; justify-content: space-between; align-items: center; gap: 2rem; color: #d3cec5; background: var(--ink); border-top: 1px solid rgba(255,255,255,.12); font-size: .72rem; }
 .sticky-buy { display: none; }
 
@@ -176,6 +199,11 @@ footer { padding: 2rem clamp(1.25rem, 5vw, 5rem) 6rem; display: flex; justify-co
   .reviews .section-heading { margin-bottom: 3rem; }
   .reviews-grid { grid-template-columns: 1fr; }
   .review-card { min-height: 0; padding: 2rem; gap: 2.5rem; }
+  .legal-policies__content, .policy-cases { grid-template-columns: 1fr; }
+  .policy-block--warranty { grid-column: auto; }
+  .policy-case, .policy-case + .policy-case { padding: 2rem 0; border-right: 0; border-bottom: 1px solid rgba(255,255,255,.16); }
+  .policy-case:last-child { border-bottom: 0; }
+  .policy-contact a { font-size: clamp(2rem, 11vw, 3rem); }
   .measure-grid { grid-template-columns: 1fr; }
   .measure-card { padding: 2rem; }
   .measure-card + .measure-card { border-left: 1px solid rgba(32,33,30,.25); border-top: 0; }
