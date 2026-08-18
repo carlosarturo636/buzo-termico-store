@@ -4,7 +4,6 @@ import { FAQ } from "@/components/FAQ";
 import { Features } from "@/components/Features";
 import { Hero } from "@/components/Hero";
 import { HowItWorks } from "@/components/HowItWorks";
-import { LegalPolicies } from "@/components/LegalPolicies";
 import { Measurements } from "@/components/Measurements";
 import { Reviews } from "@/components/Reviews";
 import { StickyBuyButton } from "@/components/StickyBuyButton";
@@ -34,8 +33,7 @@ export default async function Home() {
       <Reviews />
       <FAQ />
       <section className="final-cta"><p className="eyebrow">Tu momento, más cómodo</p><h2>Haz del frío<br /><em>tu lugar favorito.</em></h2><p>Buzo térmico tipo saco-cobija con forro polar ultra suave.</p><BuyButton /></section>
-      <LegalPolicies />
-      <footer><a className="brand brand--image brand--footer" href="#top"><Image src="/media/mufasa-wordmark.webp" alt="Mufasa" width={150} height={50} /></a><small>© {new Date().getFullYear()}</small></footer>
+      <footer><a className="brand brand--image brand--footer" href="#top"><Image src="/media/mufasa-wordmark.webp" alt="Mufasa" width={150} height={50} /></a><p>Información comercial sincronizable con Shopify.</p><small>© {new Date().getFullYear()}</small></footer>
       <StickyBuyButton />
     </main></ProductProvider>
   );
