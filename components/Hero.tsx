@@ -8,7 +8,6 @@ import { useProduct } from "./ProductProvider";
 
 const blackMedia: MediaItem[] = [
   { type: "image", src: "/media/black-model-front.webp", alt: "Modelo usando el buzo térmico negro de frente" },
-  { type: "image", src: "/media/black-model-angle.webp", alt: "Modelo usando el buzo térmico negro en vista lateral" },
   { type: "image", src: "/media/black-flat-front.webp", alt: "Buzo térmico negro extendido de frente" },
   { type: "video", src: "/media/hoodie-360.mp4", poster: "/media/hoodie-360-poster.jpg", title: "Vista 360 del buzo térmico negro" },
 ];
