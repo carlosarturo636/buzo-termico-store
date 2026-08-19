@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Manrope, Playfair_Display } from "next/font/google";
 import Script from "next/script";
 import { Suspense } from "react";
+import { MetaPixel } from "@/components/MetaPixel";
 import { MufasaIntro } from "@/components/MufasaIntro";
 import "./globals.css";
 
@@ -25,6 +26,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         </Script>
         <MufasaIntro />
         <Suspense fallback={null}>{children}</Suspense>
+        <MetaPixel />
       </body>
     </html>
   );
