@@ -2,6 +2,7 @@
 
 import { useState, useTransition } from "react";
 import { createCheckout } from "@/app/actions";
+import { getMufasaMetaParameters, trackMetaPixel } from "@/lib/meta-pixel";
 import type { ShopifyVariant } from "@/lib/shopify";
 import { ArrowIcon } from "./Icons";
 import { useProduct } from "./ProductProvider";
@@ -25,8 +26,14 @@ export function BuyButton({ compact = false, variant, label }: {
     startTransition(async () => {
       setMessage("");
       const result = await createCheckout(purchaseVariant.id);
-      if (result.checkoutUrl) window.location.assign(result.checkoutUrl);
-      else setMessage(result.error || "No pudimos iniciar la compra.");
+      if (result.checkoutUrl) {
+        const metaParameters = getMufasaMetaParameters(purchaseVariant.id);
+        trackMetaPixel("AddToCart", metaParameters);
+        trackMetaPixel("InitiateCheckout", metaParameters);
+        window.location.assign(result.checkoutUrl);
+      } else {
+        setMessage(result.error || "No pudimos iniciar la compra.");
+      }
     });
   }
 
