@@ -29,7 +29,6 @@ export function BuyButton({ compact = false, variant, label }: {
       if (result.checkoutUrl) {
         const metaParameters = getMufasaMetaParameters(purchaseVariant.id);
         trackMetaPixel("AddToCart", metaParameters);
-        trackMetaPixel("InitiateCheckout", metaParameters);
         window.location.assign(result.checkoutUrl);
       } else {
         setMessage(result.error || "No pudimos iniciar la compra.");

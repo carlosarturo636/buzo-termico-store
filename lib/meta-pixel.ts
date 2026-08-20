@@ -1,4 +1,4 @@
-export type MetaPixelEvent = "ViewContent" | "AddToCart" | "InitiateCheckout";
+export type MetaPixelEvent = "ViewContent" | "AddToCart";
 
 type MetaPixelParameters = {
   content_name: "MUFASA";
